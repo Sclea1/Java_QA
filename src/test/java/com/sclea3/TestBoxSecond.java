@@ -16,10 +16,7 @@ public class TestBoxSecond {
         Configuration.holdBrowserOpen = true;
     }
 
-    @AfterAll
-    static void afterAll() {
-        closeWebDriver();
-    }
+
 
     @Test
     void fillAllForms() {
@@ -32,12 +29,24 @@ public class TestBoxSecond {
         $("#dateOfBirthInput").click();
 
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").selectOption("Decemper");
+        $(".react-datepicker__month-select").selectOption("December");
         $(".react-datepicker__year-select").selectOption("2021");
         $x("//div[contains(text(),'5')]").click();
 
-        $("class=css-1hwfws3").setValue("Test");
+        $("#subjectsInput").setValue("Eng").pressEnter();
 
+        $x("//label[contains(text(),'Sports')]").click();
+        $x("//label[contains(text(),'Reading')]").click();
+        $x("//label[contains(text(),'Music')]").click();
+
+        $("#uploadPicture").sendKeys("C:/Users/Alexander/IdeaProjects/Java_QA/src/test/resources/textfile.txt");
+        $("#currentAddress").setValue("Moscow");
+        
+    }
+
+    @AfterAll
+    static void afterAll() {
+        closeWebDriver();
     }
 
 }
