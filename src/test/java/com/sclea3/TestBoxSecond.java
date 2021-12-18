@@ -18,7 +18,7 @@ public class TestBoxSecond {
     @BeforeAll
     static void beforeAll() {
         Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
+//      Configuration.browserSize = "1920x1080";
         Configuration.headless = true;
     }
 
