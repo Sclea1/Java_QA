@@ -1,10 +1,14 @@
 package com.sclea3;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
+import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selenide.*;
 
 public class TestBoxSecond {
@@ -25,7 +29,7 @@ public class TestBoxSecond {
         $("#lastName").setValue("Surname");
         $("#userEmail").setValue("testemail@test.org");
         $("[for='gender-radio-1']").click();
-        $("#userNumber").setValue("+23895789329");
+        $("#userNumber").setValue("+238957893294");
         $("#dateOfBirthInput").click();
 
         $("#dateOfBirthInput").click();
@@ -39,8 +43,14 @@ public class TestBoxSecond {
         $x("//label[contains(text(),'Reading')]").click();
         $x("//label[contains(text(),'Music')]").click();
 
-        $("#uploadPicture").sendKeys("C:/Users/Alexander/IdeaProjects/Java_QA/src/test/resources/textfile.txt");
+        File file = new File("src/test/resources/textfile.txt");
+        Selenide.$(byId("uploadPicture")).uploadFile(file);
         $("#currentAddress").setValue("Moscow");
+
+        $("#react-select-3-input").setValue("NCR").pressEnter();
+        $("#react-select-4-input").setValue("Delhi").pressEnter();
+
+        $("#submit").click();
         
     }
 
