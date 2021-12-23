@@ -1,22 +1,21 @@
 package com.sclea3.ui;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RegistrationFormTest {
 
     @BeforeAll
     static void beforeAll() {
         Configuration.browser = "chrome";
-//      Configuration.browserSize = "1920x1080";
-        Configuration.headless = true;
+        Configuration.browserSize = "1920x1080";
+        Configuration.headless = false;
     }
 
     @Test
@@ -26,7 +25,7 @@ public class RegistrationFormTest {
         $("#lastName").setValue("Golubkin");
         $("#userEmail").setValue("user@test.org");
         $("[for='gender-radio-1']").click();
-        $("#userNumber").setValue("238957893294");
+        $("#userNumber").setValue("2389578932");
 
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("December");
@@ -48,17 +47,10 @@ public class RegistrationFormTest {
         $("#submit").click();
 
         //Asserts
-        $(".table-responsive");
-        assertEquals("Alexander Golubkin","Alexander Golubkin");
-        assertEquals("user@test.org","user@test.org");
-        assertEquals("Male","Male");
-        assertEquals("238957893294","238957893294");
-        assertEquals("5 December,2021","5 December,2021");
-        assertEquals("English","English");
-        assertEquals("Music, Sports, Reading","Music, Sports, Reading");
-        assertEquals("textfile.txt","textfile.txt");
-        assertEquals("Moscow","Moscow");
-        assertEquals("NCR Delhi","NCR Delhi");
+        $$x("//*[@class='modal-body']//td[2]").shouldHave(CollectionCondition
+                .exactTexts("Alexander Golubkin", "user@test.org", "Male", "2389578932",
+                        "05 December,2021", "English", "Sports, Reading, Music", "textfile.txt",
+                        "Moscow", "NCR Delhi"));
     }
 }
 
