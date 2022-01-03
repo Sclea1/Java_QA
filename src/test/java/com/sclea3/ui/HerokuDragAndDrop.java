@@ -22,6 +22,5 @@ public class HerokuDragAndDrop {
         open("https://the-internet.herokuapp.com/drag_and_drop");
         $("#column-a").dragAndDropTo("#column-b");
         $("#column-a").shouldHave(text("B")).shouldBe(visible);
-        sleep(2000);
     }
 }
