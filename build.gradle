@@ -6,29 +6,33 @@ repositories {
     mavenCentral()
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
-}
-
-compileTestJava {
-    options.encoding = 'UTF-8'
-}
+def junitVersion = "5.8.2"
 
 dependencies {
+    testImplementation(
+            "io.rest-assured:rest-assured:4.4.0",
+            "org.assertj:assertj-core:3.21.0",
+            "org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     // Selenide
     testImplementation ("com.codeborne:selenide:6.1.1")
     testRuntimeOnly ("org.slf4j:slf4j-simple:1.7.32")
-
-    // JUnit 5
-    testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-
-    // Rest-Assured
-    testImplementation('io.rest-assured:rest-assured:3.0.0')
 }
 
-test {
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
     useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+//            events "started", "failed"
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
 }
+
